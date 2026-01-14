@@ -23,7 +23,7 @@
 ### 2. Cloner le Projet
 Ouvrez votre terminal et exécutez la commande suivante :
 ```bash
-git clone https://github.com/votre-utilisateur/fixy.git
+git clone https://github.com/landrykk8-oss/fixy.git
 cd fixy
 ```
 
