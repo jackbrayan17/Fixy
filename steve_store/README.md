@@ -62,4 +62,4 @@ L'APK sera disponible dans le dossier : `build/app/outputs/flutter-apk/app-relea
 ---
 
 ## 📞 Contact
-Pour toute commande ou assistance, contactez-nous au : **+237694103585**
+Pour toute commande ou assistance, contactez-nous au : **
