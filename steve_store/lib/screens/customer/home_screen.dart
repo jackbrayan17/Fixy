@@ -17,30 +17,24 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String _selectedCategory = 'Tous';
-  final List<String> _categories = ['Tous', 'Electroniques', 'Chaussures', 'Vetements', 'Parfums'];
+  String _selectedCategory = 'Tout';
+  final List<String> _categories = ['Tout', 'Robes', 'Hauts', 'Combinaisons', 'Blazers', 'Casual'];
 
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AppProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          children: [
-            Image.asset('assets/images/logo.png', height: 40, errorBuilder: (c, e, s) => const Icon(Icons.store, color: AppColors.emeraldGreen)),
-            const SizedBox(width: 8),
-            Text('Steve Store', style: TextStyle(fontWeight: FontWeight.bold, color: provider.isDarkMode ? AppColors.emeraldGreen : AppColors.midnightBlue)),
-          ],
-        ),
+        title: const Text('Fixy', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24)),
         backgroundColor: Colors.transparent,
         elevation: 0,
         actions: [
           IconButton(
-            icon: const Icon(Icons.shopping_cart, color: AppColors.emeraldGreen),
+            icon: const Icon(Icons.shopping_cart, color: AppColors.midnightBlue),
             onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const CartScreen())),
           ),
           IconButton(
-            icon: const Icon(Icons.person, color: AppColors.emeraldGreen),
+            icon: const Icon(Icons.person, color: AppColors.midnightBlue),
             onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const ProfileScreen())),
           ),
           if (provider.currentUser?.username == 'admin')
@@ -56,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Expanded(
             child: Consumer<AppProvider>(
               builder: (context, provider, child) {
-                final filteredProducts = _selectedCategory == 'Tous'
+                final filteredProducts = _selectedCategory == 'Tout'
                     ? provider.products
                     : provider.products.where((p) => p.category == _selectedCategory).toList();
 
@@ -101,15 +95,14 @@ class _HomeScreenState extends State<HomeScreen> {
               margin: const EdgeInsets.only(right: 12),
               padding: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
-                color: isSelected ? AppColors.emeraldGreen : AppColors.midnightBlue,
+                color: isSelected ? AppColors.midnightBlue : AppColors.lightGrey,
                 borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: isSelected ? AppColors.emeraldGreen : AppColors.textDim.withOpacity(0.3)),
               ),
               alignment: Alignment.center,
               child: Text(
                 cat,
                 style: TextStyle(
-                  color: isSelected ? AppColors.midnightBlue : AppColors.textDim,
+                  color: isSelected ? Colors.white : AppColors.grey,
                   fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
@@ -125,7 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: AppColors.emeraldGreen.withOpacity(0.1)),
+        border: Border.all(color: AppColors.midnightBlue.withOpacity(0.1)),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.05),
@@ -152,17 +145,17 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(product.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.textDark), maxLines: 1, overflow: TextOverflow.ellipsis),
+                Text(product.title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.midnightBlue), maxLines: 1, overflow: TextOverflow.ellipsis),
                 const SizedBox(height: 4),
-                Text('${product.price.toStringAsFixed(0)} FCFA', style: const TextStyle(color: AppColors.emeraldGreen, fontWeight: FontWeight.bold)),
+                Text('${product.price.toStringAsFixed(0)} FCFA', style: const TextStyle(color: AppColors.grey, fontWeight: FontWeight.bold)),
                 const SizedBox(height: 8),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () => _showProductDetails(product),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.emeraldGreen,
-                      foregroundColor: AppColors.midnightBlue,
+                      backgroundColor: AppColors.midnightBlue,
+                      foregroundColor: Colors.white,
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
@@ -199,9 +192,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Center(child: Container(width: 40, height: 4, decoration: BoxDecoration(color: AppColors.textDim, borderRadius: BorderRadius.circular(2)))),
                   const SizedBox(height: 20),
-                  Text(product.title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+                  Text(product.title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.midnightBlue)),
                   const SizedBox(height: 8),
-                  Text(product.category, style: const TextStyle(color: AppColors.emeraldGreen, fontWeight: FontWeight.w600)),
+                  Text(product.category, style: const TextStyle(color: AppColors.grey, fontWeight: FontWeight.w600)),
                   const SizedBox(height: 20),
                   if (product.images.isNotEmpty)
                     SizedBox(
@@ -228,24 +221,41 @@ class _HomeScreenState extends State<HomeScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('${product.price.toStringAsFixed(0)} FCFA', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.emeraldGreen)),
+                      Text('${product.price.toStringAsFixed(0)} FCFA', style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.grey)),
                       Row(
                         children: [
                           IconButton(
-                            onPressed: () {
-                              context.read<AppProvider>().addToCart(product);
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Ajouté au panier')));
-                            },
-                            icon: const Icon(Icons.add_shopping_cart, color: AppColors.emeraldGreen),
+                            icon: const Icon(Icons.add_shopping_cart, color: AppColors.midnightBlue),
                             tooltip: 'Ajouter au panier',
+                            onPressed: () {
+                              final provider = context.read<AppProvider>();
+                              final isInCart = provider.cartItems.any((item) => item.productId == product.id);
+                              provider.addToCart(product);
+                              Navigator.pop(context);
+                              
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Row(
+                                    children: [
+                                      Icon(isInCart ? Icons.remove_shopping_cart : Icons.check_circle, color: Colors.white),
+                                      const SizedBox(width: 12),
+                                      Text(isInCart ? 'Retiré du panier' : 'Ajouté au panier', style: const TextStyle(fontWeight: FontWeight.bold)),
+                                    ],
+                                  ),
+                                  backgroundColor: isInCart ? Colors.redAccent : AppColors.midnightBlue,
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  duration: const Duration(seconds: 2),
+                                ),
+                              );
+                            },
                           ),
                           const SizedBox(width: 10),
                           ElevatedButton(
                             onPressed: () => _commanderWhatsapp(product),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.emeraldGreen,
-                              foregroundColor: AppColors.midnightBlue,
+                              backgroundColor: AppColors.midnightBlue,
+                              foregroundColor: Colors.white,
                               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             ),
@@ -266,17 +276,28 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _commanderWhatsapp(Product product) async {
-    final message = "Bonjour Steve Store, je souhaite commander ce produit :\n\n"
+    final message = "Bonjour *Fixy*, je souhaite commander :\n\n"
         "*Titre:* ${product.title}\n"
         "*Prix:* ${product.price.toStringAsFixed(0)} FCFA\n"
         "*Catégorie:* ${product.category}\n"
         "*Description:* ${product.description}";
     
-    final whatsappUrl = Uri.parse("https://wa.me/22900000000?text=${Uri.encodeComponent(message)}"); // Use admin number
+    final phone = "237694103585";
+    final whatsappUrl = Uri.parse("https://api.whatsapp.com/send/?phone=$phone&text=${Uri.encodeComponent(message)}&type=phone_number&app_absent=0");
+    
     if (await canLaunchUrl(whatsappUrl)) {
       await launchUrl(whatsappUrl);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Impossible d\'ouvrir WhatsApp')));
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Impossible d\'ouvrir WhatsApp'),
+            backgroundColor: Colors.redAccent,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          ),
+        );
+      }
     }
   }
 }

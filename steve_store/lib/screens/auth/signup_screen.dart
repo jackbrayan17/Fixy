@@ -26,7 +26,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
 
-  final List<String> _categories = ['Electroniques', 'Chaussures', 'Vetements', 'Parfums'];
+  final List<String> _categories = ['Robes', 'Hauts', 'Combinaisons', 'Blazers', 'Casual'];
   final List<String> _selectedCategories = [];
 
   Future<void> _pickImage() async {
@@ -95,33 +95,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 60),
-              Center(
-                child: Image.asset(
-                  'assets/images/logo.png',
-                  height: 100,
-                  errorBuilder: (context, error, stackTrace) => const Icon(
-                    Icons.store,
-                    size: 80,
-                    color: AppColors.emeraldGreen,
+                const Text(
+                  'Fixy',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.midnightBlue,
+                    letterSpacing: 2,
                   ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                'Steve Store',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.textDark,
+                const SizedBox(height: 10),
+                const Text(
+                  'Rejoignez l\'univers Fixy',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.grey,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                'Créez votre compte professionnel',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: AppColors.textDim),
-              ),
               const SizedBox(height: 40),
               Center(
                 child: GestureDetector(
@@ -139,53 +132,53 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(height: 30),
               _buildTextField(_fullNameController, 'Nom Complet', Icons.person),
               const SizedBox(height: 15),
-              _buildTextField(_usernameController, 'Nom d\'utilisateur', Icons.alternate_email),
-              const SizedBox(height: 15),
-              _buildTextField(_emailController, 'Email', Icons.email, keyboardType: TextInputType.emailAddress),
-              const SizedBox(height: 15),
-              _buildPasswordField(_passwordController, 'Mot de passe', _obscurePassword, () {
-                setState(() => _obscurePassword = !_obscurePassword);
-              }),
-              const SizedBox(height: 15),
-              _buildPasswordField(_confirmPasswordController, 'Confirmer le mot de passe', _obscureConfirmPassword, () {
-                setState(() => _obscureConfirmPassword = !_obscureConfirmPassword);
-              }),
-              const SizedBox(height: 30),
-              const Text(
-                'Catégories préférées',
-                style: TextStyle(color: AppColors.textLight, fontWeight: FontWeight.bold),
-              ),
+                _buildTextField(_usernameController, 'Nom d\'utilisateur', Icons.alternate_email),
+                const SizedBox(height: 20),
+                _buildTextField(_emailController, 'Email', Icons.email, keyboardType: TextInputType.emailAddress),
+                const SizedBox(height: 20),
+                _buildPasswordField(_passwordController, 'Mot de passe', _obscurePassword, () {
+                  setState(() => _obscurePassword = !_obscurePassword);
+                }),
+                const SizedBox(height: 15),
+                _buildPasswordField(_confirmPasswordController, 'Confirmer le mot de passe', _obscureConfirmPassword, () {
+                  setState(() => _obscureConfirmPassword = !_obscureConfirmPassword);
+                }),
+                const SizedBox(height: 30),
+                const Text('Catégories de vente', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.midnightBlue)),
               const SizedBox(height: 10),
               Wrap(
                 spacing: 10,
                 children: _categories.map((cat) {
-                  final isSelected = _selectedCategories.contains(cat);
-                  return GestureDetector(
-                    onTap: () => _toggleCategory(cat),
-                    child: Chip(
-                      label: Text(cat),
-                      backgroundColor: isSelected ? AppColors.emeraldGreen : AppColors.midnightBlue,
-                      labelStyle: TextStyle(
-                        color: isSelected ? AppColors.midnightBlue : AppColors.textDim,
-                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                      ),
-                      side: BorderSide(color: isSelected ? AppColors.emeraldGreen : AppColors.textDim.withOpacity(0.3)),
+                      final isSelected = _selectedCategories.contains(cat);
+                      return FilterChip(
+                        label: Text(cat),
+                        selected: isSelected,
+                        onSelected: (selected) {
+                          setState(() {
+                            if (selected) _selectedCategories.add(cat);
+                            else _selectedCategories.remove(cat);
+                          });
+                        },
+                        selectedColor: AppColors.midnightBlue.withOpacity(0.2),
+                        checkmarkColor: AppColors.midnightBlue,
+                      );
+                    }).toList(),
+                  ),
+                const SizedBox(height: 40),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _submit,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.midnightBlue,
+                      foregroundColor: Colors.white,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 40),
-              ElevatedButton(
-                onPressed: _submit,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.emeraldGreen,
-                  foregroundColor: AppColors.midnightBlue,
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                  textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    child: const Text('S\'inscrire'),
+                  ),
                 ),
-                child: const Text('S\'inscrire'),
-              ),
               const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -223,10 +216,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
       style: const TextStyle(color: AppColors.textDark),
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon, color: AppColors.emeraldGreen),
-        labelStyle: const TextStyle(color: AppColors.textDim),
+        prefixIcon: Icon(icon, color: AppColors.midnightBlue),
+        labelStyle: const TextStyle(color: AppColors.grey),
         filled: true,
-        fillColor: AppColors.emeraldLight.withOpacity(0.3),
+        fillColor: AppColors.lightGrey.withOpacity(0.3),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
@@ -243,14 +236,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
       style: const TextStyle(color: AppColors.textDark),
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: const Icon(Icons.lock, color: AppColors.emeraldGreen),
+        prefixIcon: const Icon(Icons.lock, color: AppColors.midnightBlue),
         suffixIcon: IconButton(
-          icon: Icon(obscure ? Icons.visibility : Icons.visibility_off, color: AppColors.emeraldGreen),
+          icon: Icon(obscure ? Icons.visibility : Icons.visibility_off, color: AppColors.midnightBlue),
           onPressed: onToggle,
         ),
-        labelStyle: const TextStyle(color: AppColors.textDim),
+        labelStyle: const TextStyle(color: AppColors.grey),
         filled: true,
-        fillColor: AppColors.emeraldLight.withOpacity(0.3),
+        fillColor: AppColors.lightGrey.withOpacity(0.3),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,

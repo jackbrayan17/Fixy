@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color emeraldGreen = Color(0xFF50C878);
-  static const Color emeraldDark = Color(0xFF2E8B57);
-  static const Color emeraldLight = Color(0xFFD4EDDA);
-  static const Color bgLight = Color(0xFFF8FFF9);
-  static const Color bgDark = Color(0xFF020C1B); // Keeping for backward compatibility if needed, but primary is bgLight
-  static const Color midnightBlue = Color(0xFF0A192F); // Contrast for text
-  static const Color textDark = Color(0xFF1B5E20);
-  static const Color textLight = Color(0xFFE6F1FF);
-  static const Color textDim = Color(0xFF607D8B);
+  static const Color midnightBlue = Color(0xFF0A192F);
+  static const Color grey = Color(0xFF757575);
+  static const Color lightGrey = Color(0xFFF5F5F5);
+  static const Color darkGrey = Color(0xFF424242);
+  static const Color bgWhite = Color(0xFFFFFFFF);
+  static const Color textDark = Color(0xFF1A1A1A);
+  static const Color textLight = Color(0xFF8E8E8E);
+  
+  // Backward compatibility aliases if needed
+  static const Color emeraldGreen = midnightBlue; // Replaced by midnightBlue
+  static const Color emeraldDark = darkGrey;
+  static const Color emeraldLight = lightGrey;
+  static const Color textDim = grey;
 }

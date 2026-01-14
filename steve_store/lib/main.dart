@@ -17,45 +17,52 @@ void main() async {
       providers: [
         ChangeNotifierProvider.value(value: appProvider),
       ],
-      child: const SteveStoreApp(),
+      child: const FixyApp(),
     ),
   );
 }
 
-class SteveStoreApp extends StatelessWidget {
-  const SteveStoreApp({super.key});
+class FixyApp extends StatelessWidget {
+  const FixyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<AppProvider>(context);
     return MaterialApp(
-      title: 'Steve Store',
+      title: 'Fixy',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        scaffoldBackgroundColor: AppColors.bgLight,
-        primaryColor: AppColors.emeraldGreen,
+        scaffoldBackgroundColor: AppColors.bgWhite,
+        primaryColor: AppColors.midnightBlue,
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.white,
-          foregroundColor: AppColors.textDark,
+          backgroundColor: AppColors.bgWhite,
+          foregroundColor: AppColors.midnightBlue,
           elevation: 0,
           centerTitle: true,
+          titleTextStyle: TextStyle(
+            color: AppColors.midnightBlue,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         colorScheme: ColorScheme.fromSeed(
-          seedColor: AppColors.emeraldGreen,
-          primary: AppColors.emeraldGreen,
-          secondary: AppColors.emeraldDark,
-          surface: Colors.white,
+          seedColor: AppColors.midnightBlue,
+          primary: AppColors.midnightBlue,
+          secondary: AppColors.grey,
+          surface: AppColors.bgWhite,
           brightness: Brightness.light,
         ),
-        cardTheme: CardTheme(
-          color: Colors.white,
-          elevation: 2,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        cardTheme: CardThemeData(
+          color: AppColors.bgWhite,
+          elevation: 1,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+            side: BorderSide(color: AppColors.lightGrey),
+          ),
         ),
         textTheme: const TextTheme(
-          displayLarge: TextStyle(color: AppColors.textDark, fontWeight: FontWeight.bold),
+          displayLarge: TextStyle(color: AppColors.midnightBlue, fontWeight: FontWeight.bold),
           bodyLarge: TextStyle(color: AppColors.textDark),
-          bodyMedium: TextStyle(color: Colors.black87),
+          bodyMedium: TextStyle(color: AppColors.darkGrey),
         ),
         useMaterial3: true,
       ),

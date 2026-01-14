@@ -66,10 +66,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final isDark = provider.isDarkMode;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profil', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.textDark)),
+        title: const Text('Profil', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.midnightBlue)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: AppColors.textDark),
+        iconTheme: const IconThemeData(color: AppColors.midnightBlue),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout, color: Colors.redAccent),
@@ -126,7 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: ElevatedButton(
                 onPressed: _save,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.emeraldGreen,
+                  backgroundColor: AppColors.midnightBlue,
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -144,15 +144,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return TextField(
       controller: controller,
       keyboardType: keyboardType,
-      style: const TextStyle(color: AppColors.textDark),
+      style: const TextStyle(color: AppColors.midnightBlue),
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon, color: AppColors.emeraldGreen),
-        labelStyle: const TextStyle(color: AppColors.textDim),
+        prefixIcon: Icon(icon, color: AppColors.midnightBlue),
+        labelStyle: const TextStyle(color: AppColors.grey),
         filled: true,
         fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey[300]!)),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey[300]!)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey[200]!)),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey[200]!)),
       ),
     );
   }
@@ -161,19 +161,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return TextField(
       controller: controller,
       obscureText: obscure,
-      style: const TextStyle(color: AppColors.textDark),
+      style: const TextStyle(color: AppColors.midnightBlue),
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: const Icon(Icons.lock, color: AppColors.emeraldGreen),
+        prefixIcon: const Icon(Icons.lock, color: AppColors.midnightBlue),
         suffixIcon: IconButton(
-          icon: Icon(obscure ? Icons.visibility : Icons.visibility_off, color: AppColors.emeraldGreen),
+          icon: Icon(obscure ? Icons.visibility : Icons.visibility_off, color: AppColors.midnightBlue),
           onPressed: onToggle,
         ),
-        labelStyle: const TextStyle(color: AppColors.textDim),
+        labelStyle: const TextStyle(color: AppColors.grey),
         filled: true,
         fillColor: Colors.white,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey[300]!)),
-        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey[300]!)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey[200]!)),
+        enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide(color: Colors.grey[200]!)),
       ),
     );
   }

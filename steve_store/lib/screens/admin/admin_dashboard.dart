@@ -11,7 +11,7 @@ class AdminDashboard extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text('Admin Dashboard', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.textDark)),
+        title: const Text('Dashboard Fixy', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.midnightBlue)),
         backgroundColor: Colors.transparent,
         elevation: 0,
         iconTheme: const IconThemeData(color: AppColors.textDark),
@@ -48,9 +48,9 @@ class AdminDashboard extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(icon, size: 40, color: color),
+            Icon(icon, size: 40, color: color == AppColors.emeraldGreen ? AppColors.midnightBlue : color),
             const SizedBox(height: 12),
-            Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.textDark)),
+            Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.midnightBlue)),
           ],
         ),
       ),

@@ -13,13 +13,13 @@ class ManageProductsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer les Produits', style: TextStyle(color: AppColors.textDark, fontWeight: FontWeight.bold)),
+        title: const Text('Produits Fixy', style: TextStyle(color: AppColors.midnightBlue, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: AppColors.textDark),
+        iconTheme: const IconThemeData(color: AppColors.midnightBlue),
         actions: [
           IconButton(
-            icon: const Icon(Icons.add, color: AppColors.emeraldGreen),
+            icon: const Icon(Icons.add, color: AppColors.midnightBlue),
             onPressed: () => _showAddEditProductModal(context),
           ),
         ],
@@ -149,7 +149,7 @@ class _ProductFormModalState extends State<ProductFormModal> {
                 value: _category,
                 dropdownColor: Colors.white,
                 decoration: _inputDecoration('Catégorie'),
-                items: ['Electroniques', 'Chaussures', 'Vetements', 'Parfums'].map((e) => DropdownMenuItem(value: e, child: Text(e, style: const TextStyle(color: AppColors.textDark)))).toList(),
+                items: ['Robes', 'Hauts', 'Combinaisons', 'Blazers', 'Casual'].map((e) => DropdownMenuItem(value: e, child: Text(e, style: const TextStyle(color: AppColors.midnightBlue)))).toList(),
                 onChanged: (v) => setState(() => _category = v!),
               ),
               const SizedBox(height: 20),
@@ -181,7 +181,7 @@ class _ProductFormModalState extends State<ProductFormModal> {
                       width: 80,
                       height: 80,
                       decoration: BoxDecoration(color: Colors.grey[100], borderRadius: BorderRadius.circular(8), border: Border.all(color: Colors.grey[300]!)),
-                      child: const Icon(Icons.add_a_photo, color: AppColors.emeraldGreen),
+                      child: const Icon(Icons.add_a_photo, color: AppColors.midnightBlue),
                     ),
                   ),
                 ],
@@ -189,7 +189,7 @@ class _ProductFormModalState extends State<ProductFormModal> {
               const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: _submit,
-                style: ElevatedButton.styleFrom(backgroundColor: AppColors.emeraldGreen, foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 16), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
+                style: ElevatedButton.styleFrom(backgroundColor: AppColors.midnightBlue, foregroundColor: Colors.white, padding: const EdgeInsets.symmetric(vertical: 16), shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12))),
                 child: Text(widget.product == null ? 'Ajouter' : 'Enregistrer', style: const TextStyle(fontWeight: FontWeight.bold)),
               ),
               const SizedBox(height: 20),
@@ -203,7 +203,7 @@ class _ProductFormModalState extends State<ProductFormModal> {
   InputDecoration _inputDecoration(String label) {
     return InputDecoration(
       labelText: label,
-      labelStyle: const TextStyle(color: AppColors.textDim),
+      labelStyle: const TextStyle(color: AppColors.grey),
       filled: true,
       fillColor: Colors.grey[100],
       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),

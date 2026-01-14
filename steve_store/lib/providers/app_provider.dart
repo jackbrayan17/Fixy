@@ -36,91 +36,95 @@ class AppProvider with ChangeNotifier {
   }
 
   Future<void> seedDatabase() async {
-    if (_products.isNotEmpty) return;
+    // Force clear all products and re-seed with authorized collection only
+    Database db = await _dbHelper.database;
+    await db.delete('products');
+    await db.delete('product_images');
+    
     
     final mockProducts = [
       {
-        'title': 'Jumpsuit Noir & Blanc',
-        'description': 'Combinaison chic en noir et blanc pour toutes occasions.',
+        'title': 'Jumpsuit Chic',
+        'description': 'Combinaison chic en noir et blanc.',
         'price': 25000.0,
-        'category': 'Vetements',
+        'category': 'Combinaisons',
         'images': ['assets/images/products/blackwhitejumpsuits.png']
       },
       {
-        'title': 'Tenue Casual Marron',
-        'description': 'Vêtement décontracté marron, confortable et élégant.',
+        'title': 'Tenue Casual',
+        'description': 'Vêtement décontracté marron.',
         'price': 15000.0,
-        'category': 'Vetements',
+        'category': 'Casual',
         'images': ['assets/images/products/brown-casual.png']
       },
       {
-        'title': 'Blazer Marron Foncé',
-        'description': 'Blazer professionnel pour un look soigné.',
+        'title': 'Blazer Premium',
+        'description': 'Blazer professionnel soigné.',
         'price': 35000.0,
-        'category': 'Vetements',
+        'category': 'Blazers',
         'images': ['assets/images/products/darkbrown-blazer.png']
       },
       {
         'title': 'Robe Longue Beige',
-        'description': 'Magnifique robe longue beige pour vos soirées.',
+        'description': 'Magnifique robe longue beige.',
         'price': 45000.0,
-        'category': 'Vetements',
+        'category': 'Robes',
         'images': ['assets/images/products/longgown-beige.png']
       },
       {
-        'title': 'Robe Rose',
-        'description': 'Robe fluide rose, parfaite pour l\'été.',
+        'title': 'Robe Rose d\'été',
+        'description': 'Robe fluide rose.',
         'price': 20000.0,
-        'category': 'Vetements',
+        'category': 'Robes',
         'images': ['assets/images/products/pink-robe.png']
       },
       {
         'title': 'Robe de Soirée Rouge',
-        'description': 'Robe rouge éclatante pour briller en soirée.',
+        'description': 'Robe rouge éclatante.',
         'price': 50000.0,
-        'category': 'Vetements',
+        'category': 'Robes',
         'images': ['assets/images/products/red-gown.png']
       },
       {
         'title': 'Débardeur Rouge',
-        'description': 'Débardeur simple et confortable en rouge.',
+        'description': 'Débardeur simple en rouge.',
         'price': 8000.0,
-        'category': 'Vetements',
+        'category': 'Hauts',
         'images': ['assets/images/products/red-tanktop.png']
       },
       {
         'title': 'Robe Rose Pétale',
-        'description': 'Douce robe rose pétale pour un look romantique.',
+        'description': 'Douce robe rose pétale.',
         'price': 22000.0,
-        'category': 'Vetements',
+        'category': 'Robes',
         'images': ['assets/images/products/robe-petalpink.png']
       },
       {
-        'title': 'Manches Courtes Bleues',
-        'description': 'Haut bleu à manches courtes, idéal pour le quotidien.',
+        'title': 'Top Bleu',
+        'description': 'Haut bleu à manches courtes.',
         'price': 12000.0,
-        'category': 'Vetements',
+        'category': 'Hauts',
         'images': ['assets/images/products/shortsleeve-blue.png']
       },
       {
-        'title': 'T-Shirt Classique',
-        'description': 'T-shirt blanc essentiel et polyvalent.',
+        'title': 'T-Shirt Blanc',
+        'description': 'T-shirt blanc essentiel.',
         'price': 5000.0,
-        'category': 'Vetements',
+        'category': 'Hauts',
         'images': ['assets/images/products/tshirts (1).png']
       },
       {
-        'title': 'Robe Jaune Eté',
-        'description': 'Robe jaune lumineuse pour les journées ensoleillées.',
+        'title': 'Robe Jaune',
+        'description': 'Robe jaune lumineuse.',
         'price': 18000.0,
-        'category': 'Vetements',
+        'category': 'Robes',
         'images': ['assets/images/products/yello.png']
       },
       {
-        'title': 'Robe Jaune Elégante',
+        'title': 'Robe Elégante Jaune',
         'description': 'Version élégante de la robe jaune.',
         'price': 25000.0,
-        'category': 'Vetements',
+        'category': 'Robes',
         'images': ['assets/images/products/yellow-robe.png']
       },
     ];
@@ -240,8 +244,13 @@ class AppProvider with ChangeNotifier {
   }
 
   Future<void> addToCart(Product product) async {
-    await _dbHelper.insertCart({'productId': product.id, 'quantity': 1});
-    await loadCart();
+    final existingItem = _cartItems.where((item) => item.productId == product.id).toList();
+    if (existingItem.isNotEmpty) {
+      await removeFromCart(existingItem.first.id!);
+    } else {
+      await _dbHelper.insertCart({'productId': product.id, 'quantity': 1});
+      await loadCart();
+    }
   }
 
   Future<void> removeFromCart(int id) async {
@@ -274,7 +283,7 @@ class AppProvider with ChangeNotifier {
     }
     // Notify Admin
     NotificationService.showNotification(
-      'Nouvelle Commande',
+      'Nouvelle Commande - Fixy',
       'Une nouvelle commande a été passée par ${_currentUser!.fullName}.',
     );
     await clearCart();

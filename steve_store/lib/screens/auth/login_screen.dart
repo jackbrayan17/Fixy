@@ -47,32 +47,25 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Center(
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: 120,
-                    errorBuilder: (context, error, stackTrace) => const Icon(
-                      Icons.store,
-                      size: 100,
-                      color: AppColors.emeraldGreen,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
                 const Text(
-                  'Bienvenue chez Steve Store',
+                  'Fixy',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 26,
+                    fontSize: 40,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.textDark,
+                    color: AppColors.midnightBlue,
+                    letterSpacing: 2,
                   ),
                 ),
                 const SizedBox(height: 10),
                 const Text(
-                  'Connectez-vous pour continuer',
+                  'Élégance & Mode Féminine',
                   textAlign: TextAlign.center,
-                  style: TextStyle(color: AppColors.textDim),
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: AppColors.grey,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
                 const SizedBox(height: 40),
                 _buildTextField(_usernameController, 'Nom d\'utilisateur', Icons.person),
@@ -84,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ElevatedButton(
                   onPressed: _submit,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.emeraldGreen,
+                    backgroundColor: AppColors.midnightBlue,
                     foregroundColor: Colors.white,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -110,7 +103,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: const Text(
                         'Créer un compte',
                         style: TextStyle(
-                          color: AppColors.emeraldDark,
+                          color: AppColors.midnightBlue,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -131,10 +124,10 @@ class _LoginScreenState extends State<LoginScreen> {
       style: const TextStyle(color: AppColors.textDark),
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: Icon(icon, color: AppColors.emeraldGreen),
-        labelStyle: const TextStyle(color: AppColors.textDim),
+        prefixIcon: Icon(icon, color: AppColors.midnightBlue),
+        labelStyle: const TextStyle(color: AppColors.grey),
         filled: true,
-        fillColor: AppColors.emeraldLight.withOpacity(0.3),
+        fillColor: AppColors.lightGrey.withOpacity(0.3),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,
@@ -151,14 +144,14 @@ class _LoginScreenState extends State<LoginScreen> {
       style: const TextStyle(color: AppColors.textDark),
       decoration: InputDecoration(
         labelText: label,
-        prefixIcon: const Icon(Icons.lock, color: AppColors.emeraldGreen),
+        prefixIcon: const Icon(Icons.lock, color: AppColors.midnightBlue),
         suffixIcon: IconButton(
-          icon: Icon(obscure ? Icons.visibility : Icons.visibility_off, color: AppColors.emeraldGreen),
+          icon: Icon(obscure ? Icons.visibility : Icons.visibility_off, color: AppColors.midnightBlue),
           onPressed: onToggle,
         ),
-        labelStyle: const TextStyle(color: AppColors.textDim),
+        labelStyle: const TextStyle(color: AppColors.grey),
         filled: true,
-        fillColor: AppColors.emeraldLight.withOpacity(0.3),
+        fillColor: AppColors.lightGrey.withOpacity(0.3),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(12),
           borderSide: BorderSide.none,

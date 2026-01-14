@@ -11,10 +11,10 @@ class ManageOrdersScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Gérer les Commandes', style: TextStyle(color: AppColors.textDark, fontWeight: FontWeight.bold)),
+        title: const Text('Commandes Fixy', style: TextStyle(color: AppColors.midnightBlue, fontWeight: FontWeight.bold)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: AppColors.textDark),
+        iconTheme: const IconThemeData(color: AppColors.midnightBlue),
       ),
       body: Consumer<AppProvider>(
         builder: (context, provider, child) {
@@ -42,7 +42,7 @@ class ManageOrdersScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text('Client: ${order.userName}', style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.textDark)),
+                        Text('Client: ${order.userName}', style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.midnightBlue)),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                           decoration: BoxDecoration(
@@ -73,7 +73,7 @@ class ManageOrdersScreen extends StatelessWidget {
                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Commande validée')));
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.emeraldGreen,
+                            backgroundColor: AppColors.midnightBlue,
                             foregroundColor: Colors.white,
                           ),
                           child: const Text('Valider la Commande'),

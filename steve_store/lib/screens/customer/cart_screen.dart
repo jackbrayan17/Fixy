@@ -13,10 +13,10 @@ class CartScreen extends StatelessWidget {
     final provider = Provider.of<AppProvider>(context);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mon Panier', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.textDark)),
+        title: const Text('Mon Panier', style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.midnightBlue)),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        iconTheme: const IconThemeData(color: AppColors.textDark),
+        iconTheme: const IconThemeData(color: AppColors.midnightBlue),
       ),
       body: Consumer<AppProvider>(
         builder: (context, provider, child) {
@@ -56,9 +56,9 @@ class CartScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(item.productTitle ?? 'Produit', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.textDark)),
+                                Text(item.productTitle ?? 'Produit', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: AppColors.midnightBlue)),
                                 const SizedBox(height: 4),
-                                Text('${item.productPrice?.toStringAsFixed(0)} FCFA', style: const TextStyle(color: AppColors.emeraldGreen, fontWeight: FontWeight.bold)),
+                                Text('${item.productPrice?.toStringAsFixed(0)} FCFA', style: const TextStyle(color: AppColors.grey, fontWeight: FontWeight.bold)),
                               ],
                             ),
                           ),
@@ -66,7 +66,21 @@ class CartScreen extends StatelessWidget {
                             icon: const Icon(Icons.delete_outline, color: Colors.redAccent, size: 28),
                             onPressed: () {
                               provider.removeFromCart(item.id!);
-                              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Retiré du panier'), duration: Duration(seconds: 1)));
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: const Row(
+                                    children: [
+                                      Icon(Icons.delete_sweep, color: Colors.white),
+                                      const SizedBox(width: 12),
+                                      Text('Retiré du panier', style: TextStyle(fontWeight: FontWeight.bold)),
+                                    ],
+                                  ),
+                                  backgroundColor: Colors.redAccent,
+                                  behavior: SnackBarBehavior.floating,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  duration: const Duration(seconds: 1),
+                                ),
+                              );
                             },
                           ),
                         ],
@@ -89,8 +103,8 @@ class CartScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Text('Total', style: TextStyle(fontSize: 18, color: AppColors.textDim)),
-                        Text('${provider.cartTotal.toStringAsFixed(0)} FCFA', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.emeraldGreen)),
+                        const Text('Total', style: TextStyle(fontSize: 18, color: AppColors.grey)),
+                        Text('${provider.cartTotal.toStringAsFixed(0)} FCFA', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: AppColors.midnightBlue)),
                       ],
                     ),
                     const SizedBox(height: 24),
@@ -99,8 +113,8 @@ class CartScreen extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () => _commanderToutWhatsapp(provider, context),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.emeraldGreen,
-                          foregroundColor: AppColors.midnightBlue,
+                          backgroundColor: AppColors.midnightBlue,
+                          foregroundColor: Colors.white,
                           padding: const EdgeInsets.symmetric(vertical: 16),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
@@ -125,17 +139,44 @@ class CartScreen extends StatelessWidget {
       productsList += "- ${item.productTitle} (${item.productPrice?.toStringAsFixed(0)} FCFA)\n";
     }
 
-    final message = "Bonjour Steve Store, je souhaite commander les produits suivants :\n\n"
+    final message = "Bonjour *Fixy*, je souhaite commander les produits suivants :\n\n"
         "$productsList\n"
         "*Total:* ${provider.cartTotal.toStringAsFixed(0)} FCFA\n"
-        "Nom Client: ${provider.currentUser?.fullName}";
+        "Nom Client: ${provider.currentUser?.fullName ?? 'Client'}";
 
-    final whatsappUrl = Uri.parse("https://wa.me/22900000000?text=${Uri.encodeComponent(message)}");
+    final phone = "237694103585";
+    final whatsappUrl = Uri.parse("https://api.whatsapp.com/send/?phone=$phone&text=${Uri.encodeComponent(message)}&type=phone_number&app_absent=0");
+    
     if (await canLaunchUrl(whatsappUrl)) {
       await launchUrl(whatsappUrl);
       await provider.placeOrder(); // This will clear cart and save to DB
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Row(
+              children: [
+                Icon(Icons.check_circle, color: Colors.white),
+                const SizedBox(width: 12),
+                Text('Commande validée !', style: TextStyle(fontWeight: FontWeight.bold)),
+              ],
+            ),
+            backgroundColor: AppColors.midnightBlue,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          ),
+        );
+      }
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Impossible d\'ouvrir WhatsApp')));
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Impossible d\'ouvrir WhatsApp'),
+            backgroundColor: Colors.redAccent,
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+          ),
+        );
+      }
     }
   }
 }

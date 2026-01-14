@@ -11,8 +11,8 @@ class NotificationService {
 
   static Future<void> showNotification(String title, String body) async {
     const AndroidNotificationDetails androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'steve_store_channel',
-      'Steve Store Notifications',
+      'fixy_channel',
+      'Fixy Notifications',
       importance: Importance.max,
       priority: Priority.high,
     );
